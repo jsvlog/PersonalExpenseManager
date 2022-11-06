@@ -21,7 +21,6 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:elevation="20dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
@@ -29,10 +28,11 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/page1"
+        android:elevation="20dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logLogo"
         app:layout_constraintVertical_weight="4">
@@ -45,8 +45,34 @@
             android:gravity="center"
             android:text="LOGIN"
             android:textColor="@color/violet1"
-            android:textSize="20dp"
+            android:textSize="30dp"
             android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/button"
+            android:hint="Email"
+            android:textSize="25sp"
+            android:paddingLeft="10dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:drawableStart="@drawable/ic_baseline_email_24"/>
+        <EditText
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/button"
+            android:hint="Password"
+            android:textSize="25sp"
+            android:paddingLeft="10dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:drawableStart="@drawable/ic_baseline_email_24"/>
 
 
     </LinearLayout>
