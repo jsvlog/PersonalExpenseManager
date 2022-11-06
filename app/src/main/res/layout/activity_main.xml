@@ -49,30 +49,43 @@
             android:textStyle="bold" />
 
         <EditText
+            android:id="@+id/emailLogin"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/button"
             android:hint="Email"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:paddingLeft="10dp"
             android:paddingTop="3dp"
             android:paddingBottom="3dp"
+            android:inputType="textEmailAddress"
             android:drawableStart="@drawable/ic_baseline_email_24"/>
+
         <EditText
+            android:id="@+id/passwordLogin"
             android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/button"
             android:hint="Password"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:paddingLeft="10dp"
             android:paddingTop="3dp"
             android:paddingBottom="3dp"
-            android:drawableStart="@drawable/ic_baseline_email_24"/>
+            android:drawableStart="@drawable/ic_password"
+            android:inputType="textPassword"
+            />
+        <CheckBox
+            android:id="@+id/checkboxLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="show password"
+            android:layout_marginLeft="20dp" />
 
 
     </LinearLayout>

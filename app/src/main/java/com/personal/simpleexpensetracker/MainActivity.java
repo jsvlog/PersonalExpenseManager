@@ -3,9 +3,14 @@ package com.personal.simpleexpensetracker;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 
@@ -13,6 +18,8 @@ import android.widget.ImageView;
 public class MainActivity extends AppCompatActivity {
 ImageView logo;
 Animation animation, animation2;
+EditText emailLogin, passwordLogin;
+CheckBox checkBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +29,20 @@ Animation animation, animation2;
         logo = findViewById(R.id.logLogo);
         animation = AnimationUtils.loadAnimation(this,R.anim.anim);
         animation2 = AnimationUtils.loadAnimation(this,R.anim.anim2);
+        emailLogin = findViewById(R.id.emailLogin);
+        passwordLogin = findViewById(R.id.passwordLogin);
+        checkBox = findViewById(R.id.checkboxLogin);
+
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    passwordLogin.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }else{
+                    passwordLogin.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
 
 
         animation.setAnimationListener(new Animation.AnimationListener() {
