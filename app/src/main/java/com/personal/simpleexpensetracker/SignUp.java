@@ -8,7 +8,6 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -16,43 +15,44 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-public class MainActivity extends AppCompatActivity {
-ImageView logo;
-Animation animation, animation2;
-EditText emailLogin, passwordLogin;
-CheckBox checkBox;
-TextView loginRegister;
+public class SignUp extends AppCompatActivity {
+    ImageView logo;
+    Animation animation, animation2;
+    EditText emailSignup, passwordSignup, usernameSignup;
+    CheckBox checkBox;
+    TextView signupLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_sign_up);
 
-        logo = findViewById(R.id.logLogo);
+        logo = findViewById(R.id.signupLogo);
         animation = AnimationUtils.loadAnimation(this,R.anim.anim);
         animation2 = AnimationUtils.loadAnimation(this,R.anim.anim2);
-        emailLogin = findViewById(R.id.emailLogin);
-        passwordLogin = findViewById(R.id.passwordLogin);
-        checkBox = findViewById(R.id.checkboxLogin);
-        loginRegister = findViewById(R.id.loginRegister);
+        emailSignup = findViewById(R.id.emailSignup);
+        passwordSignup = findViewById(R.id.passwordSignup);
+        usernameSignup = findViewById(R.id.usernameSignup);
+        checkBox = findViewById(R.id.checkboxSignup);
+        signupLogin = findViewById(R.id.signupLogin);
 
-
-        loginRegister.setOnClickListener(new View.OnClickListener() {
+        signupLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,SignUp.class);
+                Intent intent = new Intent(SignUp.this,MainActivity.class);
                 startActivity(intent);
             }
         });
+
+
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
-                    passwordLogin.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    passwordSignup.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 }else{
-                    passwordLogin.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    passwordSignup.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
             }
         });
@@ -75,14 +75,5 @@ TextView loginRegister;
             }
         });
         logo.setAnimation(animation);
-
-
-
-
-
     }
-
-
-
-
 }
