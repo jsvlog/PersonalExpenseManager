@@ -44,7 +44,7 @@ CheckBox checkBox;
             }
         });
 
-
+        //this is for the animation of logo in log in activity
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
