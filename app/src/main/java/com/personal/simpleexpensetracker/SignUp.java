@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -38,8 +39,8 @@ public class SignUp extends AppCompatActivity {
     Button loginButton;
     FirebaseAuth mAuth;
     DatabaseReference usernameref;
-    ProgressDialog pd;
-    Boolean emailExist;
+
+
 
 
     @Override
@@ -75,28 +76,6 @@ public class SignUp extends AppCompatActivity {
                 String password = passwordSignup.getText().toString();
                 String username = usernameSignup.getText().toString();
 
-                ProgressDialog pd = new ProgressDialog(SignUp.this);
-                pd.setMessage("loaaaaaading");
-                pd.show();
-                //check if email used is existing
-                mAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
-
-                        if(task.getResult().getSignInMethods().size() == 0){
-                            emailExist = false;
-                        }else{
-                            emailExist = true;
-                        }
-                        try {
-                            task.wait();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-
-
 
 
 
@@ -110,24 +89,29 @@ public class SignUp extends AppCompatActivity {
                     passwordSignup.setError("please input password");
                 }else if (password.length() < 6){
                     passwordSignup.setError("password must be at least 6 characters");
-                }else if(emailExist){
-                    Toast.makeText(SignUp.this, "email already registered", Toast.LENGTH_SHORT).show();
-                    return;
-                }else{
-                    mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
+                } else{
+                        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
 
-                            if(task.isSuccessful()){
-                                String id = usernameref.child(mAuth.getCurrentUser().getUid()).push().getKey();
-                                usernameref.child(mAuth.getCurrentUser().getUid()).child(id).child("username").setValue(username);
+
+                                if (task.isSuccessful()) {
+
+                                    String id = usernameref.child(mAuth.getCurrentUser().getUid()).push().getKey();
+                                    usernameref.child(mAuth.getCurrentUser().getUid()).child(id).child("username").setValue(username);
+
+                                    Toast.makeText(SignUp.this, "Signup successful", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(SignUp.this, DashboardTest.class);
+                                    startActivity(intent);
+                                    finish();
+
+                                } else{
+                                    Toast.makeText(SignUp.this, "error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+
+                                }
                             }
-                            Toast.makeText(SignUp.this, "Signup successful", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(SignUp.this,DashboardTest.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                    });
+                        });
+
                 }
             }
         });
