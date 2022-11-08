@@ -14,6 +14,9 @@
         android:theme="@style/Theme.SimpleExpenseTracker"
         tools:targetApi="31">
         <activity
+            android:name=".DashboardTest"
+            android:exported="false" />
+        <activity
             android:name=".SignUp"
             android:exported="false" />
         <activity
