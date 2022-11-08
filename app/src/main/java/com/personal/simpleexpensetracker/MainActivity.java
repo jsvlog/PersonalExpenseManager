@@ -1,5 +1,6 @@
 package com.personal.simpleexpensetracker;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,19 +11,29 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class MainActivity extends AppCompatActivity {
-ImageView logo;
-Animation animation, animation2;
-EditText emailLogin, passwordLogin;
-CheckBox checkBox;
-TextView loginRegister;
+private ImageView logo;
+private Animation animation, animation2;
+private EditText emailLogin, passwordLogin;
+private CheckBox checkBox;
+private TextView loginRegister;
+Button loginButton;
+FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +47,17 @@ TextView loginRegister;
         passwordLogin = findViewById(R.id.passwordLogin);
         checkBox = findViewById(R.id.checkboxLogin);
         loginRegister = findViewById(R.id.loginRegister);
+        loginButton = findViewById(R.id.loginButton);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginCredentials();
+            }
+        });
+
 
 
         loginRegister.setOnClickListener(new View.OnClickListener() {
@@ -76,13 +98,34 @@ TextView loginRegister;
         });
         logo.setAnimation(animation);
 
-
-
-
-
     }
 
 
+
+    private void loginCredentials() {
+        String email = emailLogin.getText().toString();
+        String password = passwordLogin.getText().toString();
+
+        if (email.isEmpty()){
+            emailLogin.setError("input email");
+        }else if (password.isEmpty()){
+            passwordLogin.setError("input password");
+        }else{
+            mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()){
+                        Toast.makeText(MainActivity.this, "Successfully login", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MainActivity.this,DashboardTest.class);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(MainActivity.this, "error:" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
+    }
 
 
 }

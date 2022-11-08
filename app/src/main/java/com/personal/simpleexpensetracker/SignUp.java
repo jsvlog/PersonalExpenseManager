@@ -101,7 +101,7 @@ public class SignUp extends AppCompatActivity {
                                     usernameref.child(mAuth.getCurrentUser().getUid()).child(id).child("username").setValue(username);
 
                                     Toast.makeText(SignUp.this, "Signup successful", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(SignUp.this, DashboardTest.class);
+                                    Intent intent = new Intent(SignUp.this, MainActivity.class);
                                     startActivity(intent);
                                     finish();
 
