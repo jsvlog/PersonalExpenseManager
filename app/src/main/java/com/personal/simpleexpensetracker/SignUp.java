@@ -39,7 +39,8 @@ public class SignUp extends AppCompatActivity {
     FirebaseAuth mAuth;
     DatabaseReference usernameref;
     ProgressDialog pd;
-    boolean emailExist;
+    Boolean emailExist;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,26 +65,38 @@ public class SignUp extends AppCompatActivity {
 
 
 
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 
                 String email = emailSignup.getText().toString();
                 String password = passwordSignup.getText().toString();
                 String username = usernameSignup.getText().toString();
 
-
+                ProgressDialog pd = new ProgressDialog(SignUp.this);
+                pd.setMessage("loaaaaaading");
+                pd.show();
                 //check if email used is existing
                 mAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
                     @Override
                     public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+
                         if(task.getResult().getSignInMethods().size() == 0){
                             emailExist = false;
                         }else{
                             emailExist = true;
                         }
+                        try {
+                            task.wait();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
+
+
 
 
 
@@ -97,7 +110,7 @@ public class SignUp extends AppCompatActivity {
                     passwordSignup.setError("please input password");
                 }else if (password.length() < 6){
                     passwordSignup.setError("password must be at least 6 characters");
-                }else if(!emailExist){
+                }else if(emailExist){
                     Toast.makeText(SignUp.this, "email already registered", Toast.LENGTH_SHORT).show();
                     return;
                 }else{
@@ -112,6 +125,7 @@ public class SignUp extends AppCompatActivity {
                             Toast.makeText(SignUp.this, "Signup successful", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(SignUp.this,DashboardTest.class);
                             startActivity(intent);
+                            finish();
                         }
                     });
                 }
