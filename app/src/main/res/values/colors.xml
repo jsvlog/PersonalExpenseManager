@@ -10,5 +10,6 @@
     <color name="violet1">#A41FC6</color>
     <color name="violet2">#B549D0</color>
     <color name="violet3">#C66ADD</color>
+    <color name="greyTransparent">#833C3C3C</color>
 
 </resources>

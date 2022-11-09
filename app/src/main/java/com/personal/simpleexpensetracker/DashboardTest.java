@@ -11,7 +11,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 public class DashboardTest extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager2 viewPager2;
-    private String[] titles = new String[]{"FUND","EXPENSES","BALANCE"};
+    private String[] titles = new String[]{"FUND","EXPENSES","BALANCES"};
     private Integer[] icon = {R.drawable.ic_fund,R.drawable.ic_expenses,R.drawable.ic_balance};
 
     @Override

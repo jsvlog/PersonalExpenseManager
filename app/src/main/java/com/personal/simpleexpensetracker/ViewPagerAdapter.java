@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
-    private String[] titles = new String[]{"FUND","EXPENSES","BALANCE"};
+    private String[] titles = new String[]{"FUND","EXPENSES","BALANCES"};
 
     public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
