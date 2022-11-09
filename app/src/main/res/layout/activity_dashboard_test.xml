@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/login"
     tools:context=".DashboardTest">
 
     <androidx.appcompat.widget.Toolbar
@@ -16,9 +15,7 @@
     <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabTextColor="@color/white"
-        app:tabSelectedTextColor="@color/black"
-        app:tabRippleColor="@color/black"
+        android:background="@color/violet2"
         android:id="@+id/tabLayout">
 
     </com.google.android.material.tabs.TabLayout>
