@@ -10,13 +10,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Spinner;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 
 public class ExpensesFragment extends Fragment {
 
     FloatingActionButton fab;
+    ArrayList<String> categories = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +47,12 @@ public class ExpensesFragment extends Fragment {
                 final AlertDialog dialog = myDialog.create();
                 dialog.show();
                 dialog.setCancelable(true);
+
+                final Spinner spinner = myView.findViewById(R.id.spinnerInput);
+
+
+
+
             }
         });
 

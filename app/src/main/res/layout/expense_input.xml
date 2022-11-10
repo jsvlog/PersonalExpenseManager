@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:paddingHorizontal="15dp">
+    android:paddingHorizontal="15dp"
+    android:background="@drawable/page1"
+    android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
     <TextView
         android:layout_marginTop="15dp"
@@ -16,25 +19,23 @@
         android:textColor="@color/violet1"/>
 
 
+
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="5dp">
 
-        <TextView
+        <Spinner
+            android:id="@+id/spinnerInput"
+            android:layout_weight="3"
+            android:background="@drawable/spinner_style"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Amount: "
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:textColor="@color/violet3"
-            android:layout_weight="6"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:backgroundTint="@color/violet3"/>
+            android:spinnerMode="dialog"
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
     <LinearLayout
