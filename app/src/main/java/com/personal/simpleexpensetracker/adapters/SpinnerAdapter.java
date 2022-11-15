@@ -32,13 +32,21 @@ public class SpinnerAdapter extends ArrayAdapter {
         View rowView = layoutInflater.inflate(R.layout.spinner_layout,null,true);
         Category category = (Category) getItem(position);
         TextView textView = rowView.findViewById(R.id.spinnerText);
-        textView.setText(category.getCategory());
-        return super.getView(position, convertView, parent);
+        textView.setText(String.valueOf(category.getCategory()));
+        return rowView;
 
     }
 
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        return super.getDropDownView(position, convertView, parent);
+        if(convertView == null)
+            convertView = layoutInflater.inflate(R.layout.spinner_layout,parent,false);
+        Category category = (Category) getItem(position);
+        TextView textView = convertView.findViewById(R.id.spinnerText);
+        textView.setText(category.getCategory());
+        return convertView;
+
+
     }
+
 }

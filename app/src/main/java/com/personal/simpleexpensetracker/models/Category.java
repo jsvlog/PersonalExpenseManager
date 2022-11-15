@@ -8,14 +8,20 @@ public class Category {
     private static ArrayList<Category> categoryList = new ArrayList<>();
 
     public Category(String category) {
+
         this.category = category;
     }
 
+    public Category() {
+    }
+
     public String getCategory() {
+
         return category;
     }
 
     public void setCategory(String category) {
+
         this.category = category;
     }
 
@@ -57,6 +63,7 @@ public class Category {
     }
 
     public ArrayList<Category> getCategoryList() {
+
         return categoryList;
     }
 }
