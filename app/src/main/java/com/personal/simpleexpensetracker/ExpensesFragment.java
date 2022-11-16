@@ -113,7 +113,6 @@ public class ExpensesFragment extends Fragment {
         expenseRecyAdapter = new ExpenseRecyAdapter(options,gcontext);
 
         expenseRecyAdapter.startListening();
-        expenseRecyAdapter.notifyDataSetChanged();
         recyclerView.setAdapter(expenseRecyAdapter);
         super.onStart();
     }

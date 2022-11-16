@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,8 +32,9 @@ private Animation animation, animation2;
 private EditText emailLogin, passwordLogin;
 private CheckBox checkBox;
 private TextView loginRegister;
-Button loginButton;
-FirebaseAuth mAuth;
+private Button loginButton;
+private FirebaseAuth mAuth;
+private FirebaseAuth.AuthStateListener authStateListener;
 
 
     @Override
@@ -50,6 +52,20 @@ FirebaseAuth mAuth;
         loginButton = findViewById(R.id.loginButton);
 
         mAuth = FirebaseAuth.getInstance();
+
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = mAuth.getCurrentUser();
+                if (user !=null) {
+                    Intent intent = new Intent(MainActivity.this,DashboardTest.class);
+                    startActivity(intent);
+
+                }else{
+                    Toast.makeText(MainActivity.this, "please log in", Toast.LENGTH_LONG).show();
+                }
+            }
+        };
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +142,20 @@ FirebaseAuth mAuth;
         }
 
     }
+
+    //on start and on stop should use for mAuthstateListener
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(authStateListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAuth.removeAuthStateListener(authStateListener);
+    }
+
 
 
 }
