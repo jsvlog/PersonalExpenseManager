@@ -65,10 +65,16 @@ public class ExpensesFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Category.initCategory();
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //this is to initialize the category for spinner
-        Category.initCategory();
+
 
         fab = view.findViewById(R.id.fab);
         recyclerView = view.findViewById(R.id.expenseRecyclerview);
@@ -103,6 +109,7 @@ public class ExpensesFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+
         gcontext = context;
     }
 
@@ -147,6 +154,7 @@ public class ExpensesFragment extends Fragment {
         //this is for spinner category
         SpinnerAdapter spinnerAdapter = new SpinnerAdapter(myView.getContext(),R.layout.spinner_layout, category.getCategoryList());
         spinner.setAdapter(spinnerAdapter);
+        // i use this to put string category in realtime database and not the object
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
