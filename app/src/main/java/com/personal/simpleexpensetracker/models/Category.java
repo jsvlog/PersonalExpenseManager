@@ -25,7 +25,7 @@ public class Category {
         this.category = category;
     }
 
-    public static void initCategory(){
+    public void initCategory(){
         Category category1 = new Category("Transport");
         categoryList.add(category1);
 

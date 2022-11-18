@@ -29,8 +29,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.personal.simpleexpensetracker.adapters.ExpenseRecyAdapter;
 import com.personal.simpleexpensetracker.adapters.SpinnerAdapter;
 import com.personal.simpleexpensetracker.models.AddExpenseModel;
@@ -45,7 +48,7 @@ public class ExpensesFragment extends Fragment {
     FloatingActionButton fab;
     ArrayList<String> categories = new ArrayList<>();
     DatePickerDialog.OnDateSetListener mDateSetListener;
-    private TextView dateText;
+    private TextView dateText, totalExpense;
     private Button cancelBtn, addBtn;
     private EditText amount, notes;
     private FirebaseAuth mAuth;
@@ -55,6 +58,7 @@ public class ExpensesFragment extends Fragment {
     private RecyclerView recyclerView;
     private Context gcontext;
     private ExpenseRecyAdapter expenseRecyAdapter;
+    private Category category;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,7 +71,9 @@ public class ExpensesFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Category.initCategory();
+        category = new Category();
+        category.initCategory();
+
     }
 
     @Override
@@ -78,7 +84,7 @@ public class ExpensesFragment extends Fragment {
 
         fab = view.findViewById(R.id.fab);
         recyclerView = view.findViewById(R.id.expenseRecyclerview);
-
+        totalExpense = view.findViewById(R.id.totalExpense);
 
 
 
@@ -92,8 +98,10 @@ public class ExpensesFragment extends Fragment {
         onlineUserId = mAuth.getCurrentUser().getUid();
         reference = FirebaseDatabase.getInstance().getReference().child("Expenses").child(onlineUserId);
 
+        //Total expense
+        calculateExpense();
 
-
+        //add Expense when click
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,9 +109,27 @@ public class ExpensesFragment extends Fragment {
             }
         });
 
+    }
 
+    private void calculateExpense() {
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int total = 0;
+                for (DataSnapshot snap: snapshot.getChildren()){
+                    AddExpenseModel addExpenseModel = snap.getValue(AddExpenseModel.class);
+                    total = total + addExpenseModel.getAmount();
+                    String sTotal = String.valueOf("$" + total);
+                    totalExpense.setText(sTotal);
+                }
 
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override
@@ -147,13 +173,14 @@ public class ExpensesFragment extends Fragment {
         cancelBtn = myView.findViewById(R.id.cancelBtn);
         amount = myView.findViewById(R.id.amount);
         notes = myView.findViewById(R.id.notes);
-        Category category = new Category();
+
 
 
 
         //this is for spinner category
         SpinnerAdapter spinnerAdapter = new SpinnerAdapter(myView.getContext(),R.layout.spinner_layout, category.getCategoryList());
         spinner.setAdapter(spinnerAdapter);
+
         // i use this to put string category in realtime database and not the object
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

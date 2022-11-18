@@ -4,9 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -15,7 +17,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.personal.simpleexpensetracker.R;
 import com.personal.simpleexpensetracker.models.AddExpenseModel;
-import com.personal.simpleexpensetracker.models.Category;
 
 public class ExpenseRecyAdapter extends FirebaseRecyclerAdapter<AddExpenseModel,ExpenseRecyAdapter.expenseViewholder> {
     private DatabaseReference budgetRef;
@@ -38,6 +39,52 @@ public class ExpenseRecyAdapter extends FirebaseRecyclerAdapter<AddExpenseModel,
         holder.date.setText(model.getDate());
         holder.category.setText(model.getCategory());
         holder.amount.setText(String.valueOf(model.getAmount()));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder myDialog = new AlertDialog.Builder(context);
+                LayoutInflater inflater = LayoutInflater.from(context);
+                View myView = inflater.inflate(R.layout.expense_view_item, null);
+                myDialog.setView(myView);
+
+                AlertDialog alertDialog = myDialog.create();
+                alertDialog.show();
+                alertDialog.setCancelable(true);
+
+                final TextView tCategory, tDate, tAmount, tNotes;
+                final Button editBtn;
+                tCategory = myView.findViewById(R.id.showCategory);
+                tDate = myView.findViewById(R.id.showDate);
+                tAmount = myView.findViewById(R.id.showAmount);
+                tNotes = myView.findViewById(R.id.showNotes);
+                editBtn = myView.findViewById(R.id.editBtn);
+
+                tCategory.setText(model.getCategory());
+                tDate.setText(model.getDate());
+                tAmount.setText(String.valueOf(model.getAmount()));
+                tNotes.setText(model.getNotes());
+
+                editBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog.Builder myDialog = new AlertDialog.Builder(context);
+                        LayoutInflater inflater = LayoutInflater.from(context);
+                        View myView = inflater.inflate(R.layout.expense_input, null);
+                        myDialog.setView(myView);
+
+                        AlertDialog alertDialog2 = myDialog.create();
+                        alertDialog2.show();
+                        alertDialog2.setCancelable(true);
+
+
+
+
+                    }
+                });
+
+            }
+        });
     }
 
     @NonNull
