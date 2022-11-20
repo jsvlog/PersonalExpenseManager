@@ -59,6 +59,7 @@ public class ExpensesFragment extends Fragment {
     private Context gcontext;
     private ExpenseRecyAdapter expenseRecyAdapter;
     private Category category;
+    private SpinnerAdapter spinnerAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -143,7 +144,7 @@ public class ExpensesFragment extends Fragment {
     public void onStart() {
         FirebaseRecyclerOptions<AddExpenseModel> options =new FirebaseRecyclerOptions.Builder<AddExpenseModel>()
                 .setQuery(reference,AddExpenseModel.class).build();
-        expenseRecyAdapter = new ExpenseRecyAdapter(options,gcontext);
+        expenseRecyAdapter = new ExpenseRecyAdapter(options,gcontext,category);
 
         expenseRecyAdapter.startListening();
         recyclerView.setAdapter(expenseRecyAdapter);
@@ -178,8 +179,9 @@ public class ExpensesFragment extends Fragment {
 
 
         //this is for spinner category
-        SpinnerAdapter spinnerAdapter = new SpinnerAdapter(myView.getContext(),R.layout.spinner_layout, category.getCategoryList());
+        spinnerAdapter = new SpinnerAdapter(myView.getContext(),R.layout.spinner_layout, category.getCategoryList());
         spinner.setAdapter(spinnerAdapter);
+
 
         // i use this to put string category in realtime database and not the object
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

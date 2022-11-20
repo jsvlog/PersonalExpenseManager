@@ -1,10 +1,13 @@
 package com.personal.simpleexpensetracker.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,11 +20,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.personal.simpleexpensetracker.R;
 import com.personal.simpleexpensetracker.models.AddExpenseModel;
+import com.personal.simpleexpensetracker.models.Category;
 
 public class ExpenseRecyAdapter extends FirebaseRecyclerAdapter<AddExpenseModel,ExpenseRecyAdapter.expenseViewholder> {
     private DatabaseReference budgetRef;
     private FirebaseAuth mAuth;
     private Context context;
+    private Category category;
+
 
     /**
      * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
@@ -29,9 +35,10 @@ public class ExpenseRecyAdapter extends FirebaseRecyclerAdapter<AddExpenseModel,
      *
      * @param options
      */
-    public ExpenseRecyAdapter(@NonNull FirebaseRecyclerOptions<AddExpenseModel> options, Context context) {
+    public ExpenseRecyAdapter(@NonNull FirebaseRecyclerOptions<AddExpenseModel> options, Context context, Category category) {
         super(options);
         this.context = context;
+        this.category = category;
     }
 
     @Override
@@ -77,6 +84,29 @@ public class ExpenseRecyAdapter extends FirebaseRecyclerAdapter<AddExpenseModel,
                         alertDialog2.show();
                         alertDialog2.setCancelable(true);
 
+                        final Spinner spinner2;
+                        final TextView date, amount, notes;
+
+                        spinner2 = myView.findViewById(R.id.spinnerInput);
+                        date = myView.findViewById(R.id.datePicker);
+                        amount = myView.findViewById(R.id.amount);
+                        notes = myView.findViewById(R.id.notes);
+
+                        SpinnerAdapter spinnerAdapter2 = new SpinnerAdapter(myView.getContext(),R.layout.spinner_layout,category.getCategoryList());
+                        spinner2.setAdapter(spinnerAdapter2);
+
+                        int items = category.getCategoryList().size();
+
+                        for (int i = 0;i<items;i++ ){
+                            String r = String.valueOf(category.getCategoryList().get(i).getCategory());
+                            if (r.equals(model.getCategory())){
+                                spinner2.setSelection(i);
+                                Log.d("spinner", "onClick: " + i);
+                            }
+                        }
+
+
+
 
 
 
@@ -103,4 +133,11 @@ public class ExpenseRecyAdapter extends FirebaseRecyclerAdapter<AddExpenseModel,
             amount = itemView.findViewById(R.id.amountRecyDisplay);
         }
     }
+
+
+
+
+
+
+
 }
