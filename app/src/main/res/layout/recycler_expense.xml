@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_margin="10dp"
-    android:background="#561E1E1E">
+    android:layout_margin="2dp"
+    android:background="#BFC66ADD">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,15 +16,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="date"
-            android:textColor="@color/violet1"
-            android:paddingLeft="5dp"/>
+            android:textColor="@color/white"
+            android:paddingLeft="5dp"
+            android:textStyle="bold"/>
         <TextView
             android:id="@+id/categoryRecyDisplay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="category"
-            android:textColor="@color/violet1"
-            android:paddingLeft="5dp"/>
+            android:textColor="@color/white"
+            android:paddingLeft="5dp"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
@@ -40,6 +42,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="amount"
+            android:textStyle="bold"
+            android:textSize="18dp"
             android:gravity="center"
             android:textColor="@color/black"/>
     </LinearLayout>

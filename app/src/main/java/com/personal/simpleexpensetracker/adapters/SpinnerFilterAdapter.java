@@ -15,10 +15,10 @@ import com.personal.simpleexpensetracker.models.Category;
 
 import java.util.List;
 
-public class SpinnerAdapter extends ArrayAdapter {
+public class SpinnerFilterAdapter extends ArrayAdapter {
     LayoutInflater layoutInflater;
 
-    public SpinnerAdapter(@NonNull Context context, int resource, @NonNull List<Category> category) {
+    public SpinnerFilterAdapter(@NonNull Context context, int resource, @NonNull List<Category> category) {
 
         super(context, resource, category);
         layoutInflater = LayoutInflater.from(context);

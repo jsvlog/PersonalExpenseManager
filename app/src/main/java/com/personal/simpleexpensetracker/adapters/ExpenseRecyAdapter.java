@@ -3,6 +3,7 @@ package com.personal.simpleexpensetracker.adapters;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,6 +59,11 @@ public class ExpenseRecyAdapter extends FirebaseRecyclerAdapter<AddExpenseModel,
 
     @Override
     protected void onBindViewHolder(@NonNull expenseViewholder holder, int position, @NonNull AddExpenseModel model) {
+//        if (position %2 == 1){
+//            holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
+//        }else{
+//            holder.itemView.setBackgroundColor(Color.parseColor("#000000"));
+//        }
         holder.date.setText(model.getDate());
         holder.category.setText(model.getCategory());
         holder.amount.setText(String.valueOf(model.getAmount()));
@@ -78,7 +84,8 @@ public class ExpenseRecyAdapter extends FirebaseRecyclerAdapter<AddExpenseModel,
 
 
                 final TextView tCategory, tDate, tAmount, tNotes;
-                final Button editBtn;
+                final Button editBtn, deleteBtn;
+                deleteBtn = myView.findViewById(R.id.deleteBtn);
                 tCategory = myView.findViewById(R.id.showCategory);
                 tDate = myView.findViewById(R.id.showDate);
                 tAmount = myView.findViewById(R.id.showAmount);
@@ -89,6 +96,29 @@ public class ExpenseRecyAdapter extends FirebaseRecyclerAdapter<AddExpenseModel,
                 tDate.setText(model.getDate());
                 tAmount.setText(String.valueOf(model.getAmount()));
                 tNotes.setText(model.getNotes());
+
+                idKey = getRef(holder.getAbsoluteAdapterPosition()).getKey();
+                mAuth = FirebaseAuth.getInstance();
+                onlineUserId = mAuth.getCurrentUser().getUid();
+                reference = FirebaseDatabase.getInstance().getReference().child("Expenses").child(onlineUserId);
+
+                deleteBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        reference.child(idKey).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(myView.getContext(), "successfully deleted ", Toast.LENGTH_SHORT).show();
+                                alertDialog.dismiss();
+                            }else{
+                                Toast.makeText(myView.getContext(), "error:" + task.getException().toString(), Toast.LENGTH_SHORT).show();
+                            }
+                            }
+                        });
+                    }
+                });
 
                 editBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -196,10 +226,7 @@ public class ExpenseRecyAdapter extends FirebaseRecyclerAdapter<AddExpenseModel,
                                     notes.setError("please input notes");
                                 }else{
                                     AddExpenseModel addExpenseModel = new AddExpenseModel(sNotes,sDate,nCategory,idKey,Integer.parseInt(uAmount));
-                                    idKey = getRef(holder.getAbsoluteAdapterPosition()).getKey();
-                                    mAuth = FirebaseAuth.getInstance();
-                                    onlineUserId = mAuth.getCurrentUser().getUid();
-                                    reference = FirebaseDatabase.getInstance().getReference().child("Expenses").child(onlineUserId);
+
 
 
 
@@ -223,6 +250,7 @@ public class ExpenseRecyAdapter extends FirebaseRecyclerAdapter<AddExpenseModel,
                         });
                     }
                 });
+
 
             }
         });

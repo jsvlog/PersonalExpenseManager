@@ -123,6 +123,18 @@
         android:orientation="horizontal"
         android:padding="10dp">
         <Button
+            android:id="@+id/deleteBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button2"
+            android:text="DELETE"
+            android:textAllCaps="false"
+            android:textSize="20dp"
+            android:textColor="#FFFFFF"
+            android:layout_weight="3"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"/>
+        <Button
             android:id="@+id/editBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -134,6 +146,7 @@
             android:layout_weight="3"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"/>
+
 
 
     </LinearLayout>

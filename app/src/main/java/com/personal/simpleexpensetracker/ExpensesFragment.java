@@ -36,6 +36,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.personal.simpleexpensetracker.adapters.ExpenseRecyAdapter;
 import com.personal.simpleexpensetracker.adapters.SpinnerAdapter;
+import com.personal.simpleexpensetracker.adapters.SpinnerFilterAdapter;
 import com.personal.simpleexpensetracker.models.AddExpenseModel;
 import com.personal.simpleexpensetracker.models.Category;
 
@@ -60,6 +61,7 @@ public class ExpensesFragment extends Fragment {
     private ExpenseRecyAdapter expenseRecyAdapter;
     private Category category;
     private SpinnerAdapter spinnerAdapter;
+    private Spinner spinnerFilter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,6 +77,7 @@ public class ExpensesFragment extends Fragment {
         category = new Category();
         category.initCategory();
 
+
     }
 
     @Override
@@ -86,13 +89,15 @@ public class ExpensesFragment extends Fragment {
         fab = view.findViewById(R.id.fab);
         recyclerView = view.findViewById(R.id.expenseRecyclerview);
         totalExpense = view.findViewById(R.id.totalExpense);
+        spinnerFilter = view.findViewById(R.id.spinnerFilter);
 
+        SpinnerFilterAdapter spinnerFilterAdapter = new SpinnerFilterAdapter(view.getContext(),R.layout.spinner_layout,category.getCategoryList());
+        spinnerFilter.setAdapter(spinnerFilterAdapter);
 
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         linearLayoutManager.setStackFromEnd(true);
         linearLayoutManager.setReverseLayout(true);
-
         recyclerView.setLayoutManager(linearLayoutManager);
 
         mAuth = FirebaseAuth.getInstance();
@@ -111,6 +116,14 @@ public class ExpensesFragment extends Fragment {
         });
 
     }
+
+
+
+
+
+
+
+
 
     private void calculateExpense() {
         reference.addValueEventListener(new ValueEventListener() {
